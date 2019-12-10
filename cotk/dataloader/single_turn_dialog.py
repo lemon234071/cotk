@@ -289,10 +289,12 @@ class BERTSingleTurnDialog(BERTLanguageProcessingBase):
 		batch_size = len(indexes)
 		res["post_length"] = np.array(list(map(lambda i: len(self.data[key]['post'][i]), indexes)), dtype=int)
 		res["resp_length"] = np.array(list(map(lambda i: len(self.data[key]['resp'][i]), indexes)), dtype=int)
+		res["input_length"] = np.array(list(map(
+			lambda i: len(self.data[key]['post'][i]) + len(self.data[key]['resp'][i]) - 1, indexes)), dtype=int)
 		res_post = res["post"] = np.zeros((batch_size, np.max(res["post_length"])), dtype=int)
 		res_resp = res["resp"] = np.zeros((batch_size, np.max(res["resp_length"])), dtype=int)
-		res_post_bert = res["post_bert"] = np.zeros((batch_size, np.max(res["post_length"])), dtype=int)
-		res_resp_bert = res["resp_bert"] = np.zeros((batch_size, np.max(res["resp_length"])), dtype=int)
+		res_post_bert = res["post_bert"] = np.full((batch_size, np.max(res["post_length"])), self.bert_pad_id, dtype=int)
+		res_resp_bert = res["resp_bert"] = np.full((batch_size, np.max(res["resp_length"])), self.bert_pad_id, dtype=int)
 		res_input_gpt = res["input_HGF"] = np.full((batch_size, np.max(res["input_length"])), self.bert_pad_id, dtype=int)
 		res_label_gpt = res["label_HGF"] = np.full((batch_size, np.max(res["input_length"])), -1, dtype=int)
 		for i, j in enumerate(indexes):
