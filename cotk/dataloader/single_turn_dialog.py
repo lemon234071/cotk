@@ -308,10 +308,10 @@ class BERTSingleTurnDialog(BERTLanguageProcessingBase):
 			res_post_bert[i, :len(post_bert)] = post_bert
 			res_resp_bert[i, :len(resp_bert)] = resp_bert
 
-			input_HGF = self.data[key]['post_bert'][j] + self.data[key]['resp_bert'][j][1:]
-			label_HGF = [-1] * len(self.data[key]['post_bert'][j]) + self.data[key]['resp_bert'][j][1:]
-			res_input_gpt[i, :len(input_HGF)] = input_HGF
-			res_label_gpt[i, :len(label_HGF)] = label_HGF
+			input_hgf = self.data[key]['post_bert'][j] + self.data[key]['resp_bert'][j][1:]
+			label_hgf = [-1] * len(self.data[key]['post_bert'][j]) + self.data[key]['resp_bert'][j][1:]
+			res_input_gpt[i, :len(input_hgf)] = input_hgf
+			res_label_gpt[i, :len(label_hgf)] = label_hgf
 
 		res["post_allvocabs"] = res_post.copy()
 		res["resp_allvocabs"] = res_resp.copy()
